@@ -14,11 +14,11 @@ namespace SP_DZ_5
         public Random random = new Random();
         public int casino_number = 0;
         public Semaphore semaphore = new Semaphore(5, 5);
-        public int SetNumber()
+        public int SetNumber()//рулетка казино
         {
             return casino_number = random.Next(0, 35);
         }
-        public void SetPlayers()
+        public void SetPlayers()//установка игроков
         {
             players = new List<Player>();
             for (int i = 0; i < random.Next(20, 100); i++)
@@ -26,7 +26,7 @@ namespace SP_DZ_5
                 players.Add(new Player { Name = $"Player " + (i+1), TotalMoney = random.Next(10, 200) });
             }
         }
-        public void StartThreads()
+        public void StartThreads()//старт потоков
         {
             threads = new List<Thread>();
             for (int i = 0; i < players.Count; i++)
@@ -35,7 +35,7 @@ namespace SP_DZ_5
                 thread.Start(players[i]);
             }
         }
-       public void Go(object obj)
+       public void Go(object obj)//логика ставок
         {
             Player player = obj as Player;
 
@@ -59,7 +59,7 @@ namespace SP_DZ_5
                 semaphore.Release();
             }
         }
-        public void proverka()
+        public void proverka()//проверка после генерации рулетки
         {
             foreach (var item in players)
             {
